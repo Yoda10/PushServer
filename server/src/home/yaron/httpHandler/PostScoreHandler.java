@@ -1,4 +1,6 @@
-package server;
+package home.yaron.httpHandler;
+
+import home.yaron.server.MobileServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,13 +11,13 @@ import java.util.regex.Pattern;
 
 import com.sun.net.httpserver.HttpExchange;
 
-public class PostScoreHandler extends ScoresApiHandler {
+public class PostScoreHandler extends MobileBaseHandler {
 
-	final String ENDPOINT = Server.BASE_PATH
+	final String ENDPOINT = MobileServer.BASE_PATH
 			+ "([0-9]+)/score\\?sessionkey=(\\w+-\\w+-\\w+-\\w+-\\w+)";
 
 	@Override
-	public boolean handled(final HttpExchange he) throws IOException {
+	public boolean checkRequestURI(final HttpExchange he) throws IOException {
 		final String method = he.getRequestMethod();
 		final String requestUriPath = he.getRequestURI().toString();
 		if (((method.compareTo("POST") == 0) && Pattern.matches(ENDPOINT,

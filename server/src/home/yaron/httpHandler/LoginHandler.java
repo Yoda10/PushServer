@@ -1,4 +1,6 @@
-package server;
+package home.yaron.httpHandler;
+
+import home.yaron.server.MobileServer;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -6,12 +8,12 @@ import java.util.regex.Pattern;
 
 import com.sun.net.httpserver.HttpExchange;
 
-public class LoginHandler extends ScoresApiHandler {
+public class LoginHandler extends MobileBaseHandler {
 
-	final String LOGIN_ENDPOINT = Server.BASE_PATH + "([0-9]+)" + "/login";
+	final String LOGIN_ENDPOINT = MobileServer.BASE_PATH + "([0-9]+)" + "/login";
 
 	@Override
-	public boolean handled(final HttpExchange he) throws IOException {
+	public boolean checkRequestURI(final HttpExchange he) throws IOException {
 		final String requestUriPath = he.getRequestURI().getPath();
 		if (Pattern.matches(LOGIN_ENDPOINT, requestUriPath)) {
 			handle(he);
