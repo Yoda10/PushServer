@@ -19,6 +19,9 @@ public abstract class MobileBaseHandler implements HttpHandler
 		return false;
 	}
 
+	/**
+	 * 200 - OK - Request has succeeded.	 
+	 */
 	protected void send200(final HttpExchange httpExchange, final String response)
 	{
 		try {
@@ -33,6 +36,9 @@ public abstract class MobileBaseHandler implements HttpHandler
 		}
 	}
 
+	/**
+	 * 400 - Bad request	 
+	 */
 	protected void send400(final HttpExchange he){
 		try {
 			he.sendResponseHeaders(404, 0);
@@ -43,6 +49,9 @@ public abstract class MobileBaseHandler implements HttpHandler
 		}
 	}
 
+	/**
+	 * 500 - Internal server error	
+	 */
 	protected void send500(final HttpExchange he) {
 		try {
 			he.sendResponseHeaders(500, 0);
