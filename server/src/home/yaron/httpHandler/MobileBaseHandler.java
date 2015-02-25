@@ -12,13 +12,15 @@ public abstract class MobileBaseHandler implements HttpHandler
 	//	public void handle(final HttpExchange arg0) throws IOException {
 	//	}
 
-	public abstract void handle(final HttpExchange arg0) throws IOException; // Yaron :)
+	public abstract void handle(final HttpExchange httpExchange) throws IOException; // Yaron :)
 
-	public boolean checkRequestURI(final HttpExchange he) throws IOException {
+	public boolean checkRequestURI(final HttpExchange httpExchange) throws IOException 
+	{
 		return false;
 	}
 
-	protected void send200(final HttpExchange httpExchange, final String response) {
+	protected void send200(final HttpExchange httpExchange, final String response)
+	{
 		try {
 			httpExchange.sendResponseHeaders(200, response.length());
 
@@ -49,5 +51,21 @@ public abstract class MobileBaseHandler implements HttpHandler
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	protected void handleThread(final HttpExchange httpExchange)
+	{
+		final Thread thread = new Thread() {
+			public void run() {
+				try {
+					handle(httpExchange);
+				}
+				catch(IOException e) {
+					e.printStackTrace();
+				}
+			}  
+		};
+
+		thread.start();
 	}
 }

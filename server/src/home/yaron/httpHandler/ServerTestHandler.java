@@ -15,18 +15,20 @@ public class ServerTestHandler extends MobileBaseHandler {
 	final String TEST_ENDPOINT = MobileServer.BASE_PATH + "test";
 
 	@Override
-	public boolean checkRequestURI(final HttpExchange httpExchange) throws IOException {
+	public boolean checkRequestURI(final HttpExchange httpExchange) throws IOException
+	{
 		final String requestUriPath = httpExchange.getRequestURI().getPath();
 		if (Pattern.matches(TEST_ENDPOINT, requestUriPath)) {
-			handle(httpExchange);
+			//handle(httpExchange);
+			handleThread(httpExchange);
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public void handle(final HttpExchange httpExchange) throws IOException {
-		
+	public void handle(final HttpExchange httpExchange) throws IOException
+	{		
 		final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	
 		send200(httpExchange, "Server date and time:"+dateFormat.format(new Date()));
 	}
