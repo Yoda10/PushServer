@@ -12,13 +12,13 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class ServerTestHandler extends MobileBaseHandler {
 
-	final String TEST_ENDPOINT = MobileServer.BASE_PATH + "test";
+	final static String ENDPOINT = MobileServer.BASE_PATH + "test";
 
 	@Override
 	public boolean checkRequestURI(final HttpExchange httpExchange) throws IOException
 	{
 		final String requestUriPath = httpExchange.getRequestURI().getPath();
-		if (Pattern.matches(TEST_ENDPOINT, requestUriPath)) {
+		if (Pattern.matches(ENDPOINT, requestUriPath)) {
 			//handle(httpExchange);
 			handleThread(httpExchange);
 			return true;

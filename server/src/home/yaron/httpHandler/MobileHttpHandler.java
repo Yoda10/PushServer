@@ -11,7 +11,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 public class MobileHttpHandler implements HttpHandler
 {
-	List<MobileBaseHandler> endPointHandlers = new ArrayList<>();
+	private List<MobileBaseHandler> endPointHandlers = new ArrayList<>();
 	private MobileServerState serverState;
 
 	public MobileHttpHandler()
@@ -21,11 +21,12 @@ public class MobileHttpHandler implements HttpHandler
 		endPointHandlers.add(new PostScoreHandler());
 		endPointHandlers.add(new HighScoresListHandler());
 		endPointHandlers.add(new ServerTestHandler());
-		
+		endPointHandlers.add(new RegistrationHandler());
+
 		// Initialization the server state.
 		mobileServerInit();
 	}
-	
+
 	private void mobileServerInit()
 	{
 		serverState = new MobileServerState();
@@ -33,9 +34,10 @@ public class MobileHttpHandler implements HttpHandler
 	}
 
 	@Override
-	public void handle(final HttpExchange httpExchange) throws IOException {
-
-		for (final MobileBaseHandler httpHandler : endPointHandlers) {
+	public void handle(final HttpExchange httpExchange) throws IOException
+	{
+		for(final MobileBaseHandler httpHandler : endPointHandlers)
+		{
 			if (httpHandler.checkRequestURI(httpExchange)) {
 				return;
 			}
@@ -43,6 +45,7 @@ public class MobileHttpHandler implements HttpHandler
 
 		httpExchange.sendResponseHeaders(404, 0);
 		httpExchange.close();
+
 		/*
 		// left of debug
 		final URI requestUri = he.getRequestURI();

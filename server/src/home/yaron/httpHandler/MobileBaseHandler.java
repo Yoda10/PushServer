@@ -6,8 +6,11 @@ import java.io.OutputStream;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+
 public abstract class MobileBaseHandler implements HttpHandler
 {
+	protected final static String POST_METHOD = "POST";
+	
 	//	@Override
 	//	public void handle(final HttpExchange arg0) throws IOException {
 	//	}
