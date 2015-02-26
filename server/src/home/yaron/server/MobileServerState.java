@@ -40,7 +40,7 @@ public class MobileServerState
 		loadProperties();
 	}
 
-	public Properties getProperties()
+	private Properties getProperties()
 	{
 		return properties;
 	}	
@@ -116,5 +116,10 @@ public class MobileServerState
 		final Object value = getProperties().remove(deviceName);
 		if( value != null )
 			saveProperties(getProperties());	
+	}
+
+	public String getProperty(String key)
+	{
+		return getProperties().getProperty(key);		
 	}
 }
