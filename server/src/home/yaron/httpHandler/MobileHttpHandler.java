@@ -1,7 +1,5 @@
 package home.yaron.httpHandler;
 
-import home.yaron.server.MobileServerState;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +9,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 public class MobileHttpHandler implements HttpHandler
 {
-	private List<MobileBaseHandler> endPointHandlers = new ArrayList<>();
-	private MobileServerState serverState;
+	private List<MobileBaseHandler> endPointHandlers = new ArrayList<>();	
 
 	public MobileHttpHandler()
 	{
@@ -21,17 +18,8 @@ public class MobileHttpHandler implements HttpHandler
 		endPointHandlers.add(new PostScoreHandler());
 		endPointHandlers.add(new HighScoresListHandler());
 		endPointHandlers.add(new ServerTestHandler());
-		endPointHandlers.add(new RegistrationHandler());
-
-		// Initialization the server state.
-		mobileServerInit();
-	}
-
-	private void mobileServerInit()
-	{
-		serverState = new MobileServerState();
-		serverState.loadProperties();
-	}
+		endPointHandlers.add(new RegistrationHandler());		
+	}	
 
 	@Override
 	public void handle(final HttpExchange httpExchange) throws IOException

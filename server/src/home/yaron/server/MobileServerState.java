@@ -6,22 +6,54 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Properties;
 
+/**
+ * Singleton object to hold the mobile server state.
+ *  
+ * @author Yaron Ronen
+ * @date 26/02/2015 
+ */
 public class MobileServerState
 {
 	final static String TAG = MobileServerState.class.getSimpleName();
 	private final static String PROPERTIES_FILE = "mobileServerState.xml";
 
+	private static MobileServerState instance = null; // Singleton object
+
+	public static MobileServerState getInstance()
+	{
+		if( instance == null )
+			instance = new MobileServerState();
+		return instance;
+	}
+
+	// ----- Singleton object -----
+
 	private Properties properties = null;
 
-	public void loadProperties()
+	private MobileServerState()
+	{		
+		init();
+	}
+
+	private synchronized void init()
+	{
+		loadProperties();
+	}
+
+	public Properties getProperties()
+	{
+		return properties;
+	}	
+
+	private void loadProperties()
 	{
 		FileInputStream inputStream = null;
-		
+
 		try
 		{
 			// Load the properties detail from a defined XML file.
 			inputStream = new FileInputStream(PROPERTIES_FILE);
-			properties.loadFromXML(inputStream);
+			getProperties().loadFromXML(inputStream);
 			System.out.println(TAG+": mobile server properties loaded.");	
 		} 
 		catch(Exception ex) {		
@@ -39,7 +71,7 @@ public class MobileServerState
 		}
 	}
 
-	public void saveProperties(Properties properties)
+	private synchronized void saveProperties(Properties properties)
 	{	
 		OutputStream outputStream = null;
 
@@ -63,5 +95,26 @@ public class MobileServerState
 				e.printStackTrace();
 			}
 		}		
+	}
+
+	public void registerDevice(String deviceName, String registrationId)
+	{
+		// Parameters checking.
+		if( deviceName == null || registrationId == null )		
+			throw new IllegalArgumentException("Device registration parameters are illegal.");
+
+		getProperties().setProperty(deviceName, registrationId);		
+		saveProperties(getProperties());		
+	}
+
+	public void unregisterDevice(String deviceName)
+	{
+		// Parameters checking.
+		if( deviceName == null )		
+			throw new IllegalArgumentException("Device unregistration name parameter is illegal.");
+
+		final Object value = getProperties().remove(deviceName);
+		if( value != null )
+			saveProperties(getProperties());	
 	}
 }

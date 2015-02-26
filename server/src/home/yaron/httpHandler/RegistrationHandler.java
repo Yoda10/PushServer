@@ -1,6 +1,7 @@
 package home.yaron.httpHandler;
 
 import home.yaron.server.MobileServer;
+import home.yaron.server.MobileServerState;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,9 +42,8 @@ public class RegistrationHandler extends MobileBaseHandler
 
 		if( registrationId != null && deviceName != null )
 		{
-			
-			
-			send200(httpExchange, "Device:"+deviceName+" successfully register in mobile server.");
+			MobileServerState.getInstance().registerDevice(deviceName,registrationId);			
+			send200(httpExchange, "Device:"+deviceName+" successfully registered in mobile server.");
 		}
 	}
 }

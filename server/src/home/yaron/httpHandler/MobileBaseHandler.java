@@ -10,12 +10,12 @@ import com.sun.net.httpserver.HttpHandler;
 public abstract class MobileBaseHandler implements HttpHandler
 {
 	protected final static String POST_METHOD = "POST";
-	
+
 	//	@Override
 	//	public void handle(final HttpExchange arg0) throws IOException {
 	//	}
 
-	public abstract void handle(final HttpExchange httpExchange) throws IOException; // Yaron :)
+	public abstract void handle(final HttpExchange httpExchange) throws IOException;
 
 	public boolean checkRequestURI(final HttpExchange httpExchange) throws IOException 
 	{
@@ -64,16 +64,24 @@ public abstract class MobileBaseHandler implements HttpHandler
 			e.printStackTrace();
 		}
 	}
-	
+
 	protected void handleThread(final HttpExchange httpExchange)
 	{
 		final Thread thread = new Thread() {
 			public void run() {
-				try {
-					handle(httpExchange);
+				try
+				{
+					handle(httpExchange); // Call the specific handler.
 				}
-				catch(IOException e) {
-					e.printStackTrace();
+				catch(Exception ex) {
+					ex.printStackTrace();					
+					try {
+						httpExchange.sendResponseHeaders(406, 0); //TODO: 406 is the correct number ? general problem
+						httpExchange.close();
+					} 
+					catch (IOException e) {						
+						e.printStackTrace();
+					}					
 				}
 			}  
 		};
