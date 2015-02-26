@@ -10,7 +10,7 @@ import com.sun.net.httpserver.HttpServer;
 public class MobileServer
 {
 	final static String TAG = MobileServer.class.getSimpleName();
-	final static public String BASE_PATH = "/api/scores/";
+	final static public String BASE_PATH = "/api/scores/";	
 
 	public static void main(final String[] args)
 	{
@@ -18,10 +18,10 @@ public class MobileServer
 
 		try
 		{
-			final HttpServer server = HttpServer.create(new InetSocketAddress(8089), 0);
-			server.createContext(BASE_PATH, new MobileHttpHandler());
-			server.setExecutor(Executors.newCachedThreadPool());
-			server.start();
+			final HttpServer httpServer = HttpServer.create(new InetSocketAddress(8089), 0);
+			httpServer.createContext(BASE_PATH, new MobileHttpHandler());
+			httpServer.setExecutor(Executors.newCachedThreadPool());			
+			httpServer.start();
 
 			System.out.println(TAG+": mobile server started.");	
 		} 
@@ -30,5 +30,5 @@ public class MobileServer
 			System.out.println(TAG+": problem starting the mobile server.");
 			e.printStackTrace();
 		}
-	}
+	}	
 }
