@@ -2,11 +2,10 @@ package home.yaron.httpHandler;
 
 import home.yaron.server.MobileServer;
 import home.yaron.server.MobileServerState;
+import home.yaron.utils.ServerUtils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Properties;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -31,14 +30,11 @@ public class RegistrationHandler extends MobileBaseHandler
 
 	@Override
 	public void handle(final HttpExchange httpExchange) throws IOException
-	{
-		final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
-		final Properties properties = new Properties();
-		properties.load(bufferedReader);
-
-		// Get the post values.
-		final String registrationId = properties.getProperty("RegistrationId");
-		final String deviceName = properties.getProperty("DeviceName");
+	{	
+		// Get the post values.	
+		final Map<String, String> postParams = ServerUtils.getParams(httpExchange.getRequestBody());			
+		final String registrationId = postParams.get("RegistrationId");
+		final String deviceName = postParams.get("DeviceName");		
 
 		if( registrationId != null && deviceName != null )
 		{
