@@ -9,21 +9,27 @@ import com.sun.net.httpserver.HttpHandler;
 
 public class MobileHttpHandler implements HttpHandler
 {
+	final static String TAG = MobileHttpHandler.class.getSimpleName();
 	private List<MobileBaseHandler> endPointHandlers = new ArrayList<>();	
 
 	public MobileHttpHandler()
 	{
+		System.out.println(TAG+": MobileHttpHandler(..)");
+		
 		// Initialization all end points.
-		endPointHandlers.add(new LoginHandler());
-		endPointHandlers.add(new PostScoreHandler());
-		endPointHandlers.add(new HighScoresListHandler());
+		//endPointHandlers.add(new LoginHandler());
+		//endPointHandlers.add(new PostScoreHandler());
+		//endPointHandlers.add(new HighScoresListHandler());
 		endPointHandlers.add(new ServerTestHandler());
-		endPointHandlers.add(new RegistrationHandler());		
+		endPointHandlers.add(new RegistrationHandler());
+		endPointHandlers.add(new SendMessageHandler());
 	}	
 
 	@Override
 	public void handle(final HttpExchange httpExchange) throws IOException
 	{
+		System.out.println(TAG+": handle(..)");
+		
 		for(final MobileBaseHandler httpHandler : endPointHandlers)
 		{
 			if (httpHandler.checkRequestURI(httpExchange)) {

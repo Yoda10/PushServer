@@ -12,6 +12,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class ServerTestHandler extends MobileBaseHandler {
 
+	final static String TAG = ServerTestHandler.class.getSimpleName();
 	final static String ENDPOINT = MobileServer.BASE_PATH + "test";
 
 	@Override
@@ -28,7 +29,9 @@ public class ServerTestHandler extends MobileBaseHandler {
 
 	@Override
 	public void handle(final HttpExchange httpExchange) throws IOException
-	{		
+	{
+		System.out.println(TAG+": handle(..)");
+		
 		final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");	
 		send200(httpExchange, "Server date and time:"+dateFormat.format(new Date()));
 	}

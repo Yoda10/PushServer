@@ -8,7 +8,8 @@ import com.sun.net.httpserver.HttpHandler;
 
 
 public abstract class MobileBaseHandler implements HttpHandler
-{
+{	
+	protected final static String TAG = MobileBaseHandler.class.getSimpleName();
 	protected final static String POST_METHOD = "POST";
 
 	//	@Override
@@ -67,6 +68,8 @@ public abstract class MobileBaseHandler implements HttpHandler
 
 	protected void handleThread(final HttpExchange httpExchange)
 	{
+		System.out.println(TAG+": handleThread(..)");
+		
 		final Thread thread = new Thread() {
 			public void run() {
 				try

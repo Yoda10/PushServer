@@ -12,7 +12,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 
 public class RegistrationHandler extends MobileBaseHandler
-{
+{	
+	final static String TAG = RegistrationHandler.class.getSimpleName();
 	final static String ENDPOINT = MobileServer.BASE_PATH + "register";
 
 	@Override
@@ -31,6 +32,8 @@ public class RegistrationHandler extends MobileBaseHandler
 	@Override
 	public void handle(final HttpExchange httpExchange) throws IOException
 	{	
+		System.out.println(TAG+":handle(..)");
+		
 		// Get the post values.	
 		final Map<String, String> postParams = ServerUtils.getParams(httpExchange.getRequestBody());			
 		final String registrationId = postParams.get("RegistrationId");

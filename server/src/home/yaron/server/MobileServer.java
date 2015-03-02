@@ -20,8 +20,9 @@ public class MobileServer
 		{
 			final HttpServer httpServer = HttpServer.create(new InetSocketAddress(8089), 0);
 			httpServer.createContext(BASE_PATH, new MobileHttpHandler());
-			httpServer.setExecutor(Executors.newCachedThreadPool());			
-			httpServer.start();
+			httpServer.setExecutor(Executors.newCachedThreadPool());
+			//httpServer.setExecutor(null);
+			httpServer.start();			
 
 			System.out.println(TAG+": mobile server started.");	
 		} 
