@@ -37,7 +37,11 @@ public class MobileServerState
 
 	private synchronized void init()
 	{
-		loadProperties();
+		final Properties properties = loadProperties();
+		if( properties != null )
+			this.properties = properties;
+		else
+			this.properties = new Properties();
 	}
 
 	private Properties getProperties()
@@ -45,15 +49,17 @@ public class MobileServerState
 		return properties;
 	}	
 
-	private void loadProperties()
+	private Properties loadProperties()
 	{
+		Properties properties = null;
 		FileInputStream inputStream = null;
 
 		try
 		{
 			// Load the properties detail from a defined XML file.
 			inputStream = new FileInputStream(PROPERTIES_FILE);
-			getProperties().loadFromXML(inputStream);
+			properties = new Properties();
+			properties.loadFromXML(inputStream);
 			System.out.println(TAG+": mobile server properties loaded.");	
 		} 
 		catch(Exception ex) {		
@@ -69,6 +75,8 @@ public class MobileServerState
 				e.printStackTrace();
 			}
 		}
+
+		return properties;
 	}
 
 	private synchronized void saveProperties(Properties properties)
