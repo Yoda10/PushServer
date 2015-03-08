@@ -1,5 +1,7 @@
 package home.yaron.gcm;
 
+import home.yaron.server.MobileServerState;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -41,7 +43,11 @@ public class Post2Gcm
 
 			// 5.3 Copy Content "JSON" into
 			//mapper.writeValue(dataOutputStream, content);
-			dataOutputStream.writeUTF("{"+content+"}");
+			dataOutputStream.writeUTF("{");
+			final String m1 = "\"registration_ids\" : [\""+MobileServerState.getInstance().getProperty("Sony_tablet")+"\"]"+",";
+			final String m2 = "\"data\" : {\"score\" : \"1-0\"}";
+			dataOutputStream.writeUTF(m1+m2);
+			dataOutputStream.writeUTF("}");
 
 			// 5.4 Send the request
 			dataOutputStream.flush();
