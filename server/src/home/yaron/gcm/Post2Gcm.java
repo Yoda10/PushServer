@@ -14,8 +14,10 @@ public class Post2Gcm
 {
 	private final static String API_SERVER_KEY = "AIzaSyAd7A0j7NOqoAyQRu3R-xBaVIDODoe-_aM";
 
-	public static void post(Content content)
+	public static int post(Content content)
 	{
+		int responseCode = -1;
+		
 		try
 		{
 			// 1. URL			
@@ -51,12 +53,13 @@ public class Post2Gcm
 			dataOutputStream.close();
 
 			// 6. Get the response
-			int responseCode = conn.getResponseCode();
+			responseCode = conn.getResponseCode();
 			System.out.println("\nSending 'POST' request to URL: " + url);
 			System.out.println("\nResponse Code: " + responseCode);
 
+			// Response 200 is OK.
 			if( responseCode != 200 )
-				return;
+				return responseCode;
 
 			final BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));			
 			final StringBuffer response = new StringBuffer();
@@ -69,8 +72,7 @@ public class Post2Gcm
 			in.close();
 
 			// 7. Print result
-			System.out.println(response.toString());
-
+			System.out.println(response.toString());			
 		}
 		catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -78,5 +80,7 @@ public class Post2Gcm
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return responseCode;
 	}
 }

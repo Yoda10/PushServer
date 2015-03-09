@@ -34,23 +34,25 @@ public class SendMessageHandler extends MobileBaseHandler {
 	public void handle(final HttpExchange httpExchange) throws IOException
 	{
 		System.out.println(TAG+": handle(..)");
-		
+
 		// Get the post values from the mobile client.	
 		final Map<String, String> postParams = ServerUtils.getParams(httpExchange.getRequestBody());			
 		final String message = postParams.get("Message");
 		final String deviceName = postParams.get("DeviceName");
-		
+
 		final String registrationId = MobileServerState.getInstance().getProperty(deviceName);		
 		final Content content = new Content();
 		content.addRegId(registrationId);
-		content.createData("title1", "message1");
-		content.createData("title2", "message2");
-		
+		content.createData("data1", "message1");
+		content.createData("date2", "message2");
+
 		// Post a request to the GCM service.
-		Post2Gcm.post(content);
-		
-		System.out.println(TAG+":deviceName:"+deviceName+" message:"+message+" registrationId:"+registrationId);
-		
-		send200(httpExchange, "Good");
+		final int responseCode = Post2Gcm.post(content);
+		if( responseCode == 200 ) // OK
+			send200(httpExchange, "GCM push message sent successfully.");
+		else // Bad
+			send200(httpExchange, "GCM send service return error. responseCode:"+responseCode);
+
+		System.out.println(TAG+":deviceName:"+deviceName+" message:"+message+" responseCode:"+responseCode);		
 	}
 }
