@@ -1,15 +1,12 @@
 package home.yaron.gcm;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class Content implements Serializable
+public class Content
 {	
-	private static final long serialVersionUID = 185L;
-	
 	private List<String> registration_ids;
 	private Map<String,String> data;
 
