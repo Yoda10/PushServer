@@ -43,8 +43,9 @@ public class SendMessageHandler extends MobileBaseHandler {
 		final String registrationId = MobileServerState.getInstance().getProperty(deviceName);		
 		final Content content = new Content();
 		content.addRegId(registrationId);
-		content.createData("data1", "message1");
-		content.createData("date2", "message2");
+		content.createData("message", message);
+		content.createData("message1", message+"1");
+		content.createData("message2", message+"2");
 
 		// Post a request to the GCM service.
 		final int responseCode = Post2Gcm.post(content);
